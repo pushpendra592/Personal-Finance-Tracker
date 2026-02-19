@@ -1,0 +1,86 @@
+@import "tailwindcss";
+
+html {
+  scroll-behavior: smooth;
+}
+
+:root {
+  /* Light Theme Variables */
+  --bg-primary: #ffffff;
+  --bg-secondary: #f3f4f6;
+  /* gray-100 */
+  --bg-card: #f9fafb;
+  /* gray-50 */
+  --text-primary: #1f2937;
+  /* gray-800 */
+  --text-secondary: #6b7280;
+  /* gray-500 */
+  --border-color: #e5e7eb;
+  /* gray-200 */
+  --accent-color: #7c3aed;
+  /* violet-600 */
+  --accent-hover: #6d28d9;
+  /* violet-700 */
+
+  color-scheme: light;
+}
+
+.dark {
+  /* Dark Theme Variables */
+  --bg-primary: #000000;
+  --bg-secondary: #18181b;
+  /* zinc-900 */
+  --bg-card: #09090b;
+  /* zinc-950 */
+  --text-primary: #ffffff;
+  --text-secondary: #a1a1aa;
+  /* zinc-400 */
+  --border-color: #27272a;
+  /* zinc-800 */
+  --accent-color: #8b5cf6;
+  /* violet-500 */
+  --accent-hover: #7c3aed;
+  /* violet-600 */
+
+  color-scheme: dark;
+}
+
+/* View Transitions */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+::view-transition-old(root) {
+  z-index: 1;
+}
+
+::view-transition-new(root) {
+  z-index: 2147483646;
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  transition: background-color 0.3s ease, color 0.3s ease;
+  scroll-behavior: smooth;
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-secondary);
+}
