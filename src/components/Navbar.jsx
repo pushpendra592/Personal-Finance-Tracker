@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import {
     LayoutDashboard,
@@ -17,6 +17,42 @@ import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
 import { motion, AnimatePresence } from 'framer-motion';
 import ThemeToggler from './ThemeToggler';
+
+const Typewriter = ({ text, delay = 100, infinite = true }) => {
+    const [currentText, setCurrentText] = useState('');
+    const [currentIndex, setCurrentIndex] = useState(0);
+    const [isDeleting, setIsDeleting] = useState(false);
+
+    useEffect(() => {
+        let timeout;
+
+        if (isDeleting) {
+            if (currentIndex > 0) {
+                timeout = setTimeout(() => {
+                    setCurrentText(prev => prev.slice(0, -1));
+                    setCurrentIndex(prev => prev - 1);
+                }, 50); // Deleting speed
+            } else {
+                setIsDeleting(false);
+            }
+        } else {
+            if (currentIndex < text.length) {
+                timeout = setTimeout(() => {
+                    setCurrentText(prev => prev + text[currentIndex]);
+                    setCurrentIndex(prev => prev + 1);
+                }, delay); // Typing speed
+            } else if (infinite) {
+                timeout = setTimeout(() => {
+                    setIsDeleting(true);
+                }, 2000); // Pause before deleting
+            }
+        }
+
+        return () => clearTimeout(timeout);
+    }, [currentIndex, isDeleting, text, delay, infinite]);
+
+    return <span>{currentText}<span className="animate-pulse">|</span></span>;
+};
 
 const Navbar = ({ isLanding = false }) => {
     const { currentUser, logout } = useAuth();
@@ -58,8 +94,8 @@ const Navbar = ({ isLanding = false }) => {
                         <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-[var(--accent-color)] to-[var(--accent-hover)] flex items-center justify-center shadow-lg shadow-[var(--accent-color)]/20">
                             <Wallet className="w-6 h-6 text-white" />
                         </div>
-                        <span className="font-bold text-xl tracking-tight text-[var(--text-primary)] hidden sm:block">
-                            FinanceTracker
+                        <span className="font-bold text-xl tracking-tight text-[var(--text-primary)] hidden sm:block min-w-[150px]">
+                            <Typewriter text="FinanceTracker" />
                         </span>
                     </div>
 
