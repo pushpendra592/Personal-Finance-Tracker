@@ -25,12 +25,19 @@ const LoginPage = () => {
     const handleGoogleSignIn = async () => {
         try {
             setIsLoading(true);
+            console.log("Starting Google Sign In...");
             await googleSignIn();
+            console.log("Google Sign In successful!");
             toast.success("Logged in with Google successfully!");
             navigate('/dashboard');
         } catch (error) {
-            console.error("Google Sign In Error:", error);
-            toast.error("Failed to log in with Google.");
+            console.error("Google Sign In Error Object:", error);
+            console.error("Error Code:", error.code);
+            console.error("Error Message:", error.message);
+            if (error.customData) {
+                console.error("Error Custom Data:", error.customData);
+            }
+            toast.error(`Failed to log in with Google: ${error.message}`);
         } finally {
             setIsLoading(false);
         }

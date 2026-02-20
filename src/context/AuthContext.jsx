@@ -37,9 +37,17 @@ export const AuthProvider = ({ children }) => {
         return signInWithEmailAndPassword(auth, email, password);
     };
 
-    const googleSignIn = () => {
+    const googleSignIn = async () => {
+        console.log("AuthContext: googleSignIn called");
         const provider = new GoogleAuthProvider();
-        return signInWithPopup(auth, provider);
+        try {
+            const result = await signInWithPopup(auth, provider);
+            console.log("AuthContext: signInWithPopup result:", result);
+            return result;
+        } catch (error) {
+            console.error("AuthContext: signInWithPopup error:", error);
+            throw error;
+        }
     };
 
     const updateUserProfile = (name) => {
